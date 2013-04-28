@@ -1,0 +1,394 @@
+@font-face{
+font-family: Electrolize;
+src: url('../fonts/Electrolize-Regular.ttf')
+    ,url('../fonts/Electrolize-Regular.eot'); /* IE9+ */
+}
+
+body{
+	overflow:hidden;
+	font-family:Electrolize;
+	color:white;
+
+	background-color: rgb(0,0,5);
+	background-image: url("../images/starstreak.png");
+
+	perspective:600;
+	-ms-perspective:600;
+	-moz-perspective:600;
+	-webkit-perspective:600;
+	-o-perspective:600;
+
+	transform-style:preserve-3d;
+	-ms-transform-style:preserve-3d;
+	-moz-transform-style:preserve-3d;
+	-webkit-transform-style:preserve-3d;
+	-o-transform-style:preserve-3d;
+
+	perspective-origin: 0% 0%;
+	-ms-perspective-origin: 0% 0%;
+	-moz-perspective-origin: 0% 0%;
+	-webkit-perspective-origin: 0% 0%;
+	-o-perspective-origin: 0% 0%;
+}
+a{
+	color:rgb(255,255,255);
+	text-decoration:underline;
+
+	transition:color .5s;
+	-ms-transition:color .5s;
+	-moz-transition:color .5s;
+	-webkit-transition:color .5s;
+	-o-transition:color .5s;
+}
+a:hover{
+	color:rgba(0,150,255,1);
+	text-decoration:underline;
+}
+canvas{
+	position: absolute;
+	top:0px;
+	left:0px;
+}
+
+.content{
+	/*transition:all .5s;
+	-moz-transition:all .5s;
+	-webkit-transition:all .5s;
+	-o-transition:all .5s;*/
+}
+.content .navLoggedOut{
+	position:absolute;
+	right:10px;
+	top:-10px;
+	z-index:1;
+	width:310px;
+	height:20px;
+	/*height:150px;*/
+
+	padding:10px;
+	overflow: hidden;
+
+	background-color:rgba(53,121,123,.5);
+	background-image:url('../images/horizon_stripe.png');
+	border-bottom-right-radius:5px;
+	border-bottom-left-radius:5px;
+	box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+	-ms-box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+	-moz-box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+	-webkit-box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+	-o-box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+
+	text-align:right;
+	font-size:20px;
+	line-height:25px;
+
+	transition:height .5s;
+	-ms-transition:height .5s;
+	-moz-transition:height .5s;
+	-webkit-transition:height .5s;
+	-o-transition:height .5s;
+
+	transform:rotateX(1deg);
+	-ms-transform:rotateY(1deg); /* IE 9 */
+	-moz-transform:rotateY(1deg); /* Firefox */
+	-webkit-transform:rotateX(1deg); /*Chrome and Safari*/
+	-o-transform:rotateY(1deg); /* Opera */
+
+	transform-origin: center top;
+	-ms-transform-origin: center top;
+	-moz-transform-origin: center top;
+	-webkit-transform-origin: center top;
+	-o-transform-origin: center top;
+}
+.content .navLoggedOut:hover{
+	height:220px;
+	/*height:340px;*/
+}
+.content .navLoggedOut .arrow{
+	position: absolute;
+	top:10px;
+	left:10px;
+
+	width: 0;
+	height: 0;
+	border-left: 15px solid transparent;
+	border-right: 15px solid transparent;
+	border-top: 20px solid white;
+}
+.content .navLoggedOut .username{
+	position: relative;
+	top:-7px;
+	right:5px;
+}
+.content .navLoggedOut .profilePic{
+	position: relative;
+	top:-3px;
+	right:0px;
+}
+.content .navLoggedIn{
+	position:absolute;
+	right:10px;
+	top:-10px;
+	z-index:1;
+	width:310px;
+	height:20px;
+
+	padding:10px;
+	overflow: hidden;
+
+	background-color:rgba(53,121,123,.5);
+	background-image:url('../images/horizon_stripe.png');
+	border-bottom-right-radius:15px;
+	border-bottom-left-radius:15px;
+	box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+	-ms-box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+	-moz-box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+	-webkit-box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+	-o-box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+
+	text-align:right;
+	font-size:20px;
+	line-height:25px;
+
+	transition:height .5s;
+	-ms-transition:height .5s;
+	-moz-transition:height .5s;
+	-webkit-transition:height .5s;
+	-o-transition:height .5s;
+
+	transform:rotateX(1deg);
+	-ms-transform:rotateY(1deg); /* IE 9 */
+	-moz-transform:rotateY(1deg); /* Firefox */
+	-webkit-transform:rotateX(1deg); /*Chrome and Safari*/
+	-o-transform:rotateY(1deg); /* Opera */
+
+	transform-origin: center top;
+	-ms-transform-origin: center top;
+	-moz-transform-origin: center top;
+	-webkit-transform-origin: center top;
+	-o-transform-origin: center top;
+}
+.content .navLoggedIn:hover{
+	height:180px;
+}
+.content .navLoggedIn .arrow{
+	position: absolute;
+	top:10px;
+	left:10px;
+
+	width: 0;
+	height: 0;
+	border-left: 15px solid transparent;
+	border-right: 15px solid transparent;
+	border-top: 20px solid white;
+}
+.content .navLoggedIn .username{
+	position: relative;
+	top:-7px;
+	right:5px;
+}
+.content .navLoggedIn .profilePic{
+	position: relative;
+	top:-3px;
+	right:0px;
+}
+body div canvas{
+	z-index: -1;
+}
+.content .arwing div{
+	position: absolute;
+	top:200px;
+	left:200px;
+	z-index: -10;
+
+	width:1024px;
+	height:618px;
+
+	background-repeat: no-repeat;
+	background-image:url('../images/arwing.png');
+	/*background-position: 0px 50px;*/
+	background-size:contain;
+}
+.content .arwing #div{
+	z-index:-11;
+}
+.content .title{
+	position: absolute;
+	bottom:5px;
+	right:170px;
+
+	letter-spacing: -5px;
+
+	padding:10px;
+
+	width:370px;
+	height:220px;
+
+	background-color:rgba(53,121,123,.5);
+	background-image:url('../images/horizon_stripe.png');
+	border-radius:5px;
+
+	box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+	-ms-box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+	-moz-box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+	-webkit-box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+	-o-box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+
+	font-size:90px;
+	color:rgba(255,255,255,1);
+
+	transform:rotateY(-13deg) rotateX(-1deg);
+	-ms-transform:rotateY(-13deg) rotateX(-1deg); /* IE 9 */
+	-moz-transform:rotateY(-13deg) rotateX(-1deg); /* Firefox */
+	-webkit-transform:rotateY(-13deg) rotateX(-1deg); /* Safari and Chrome */
+	-o-transform:rotateY(-13deg) rotateX(-1deg); /* Opera */
+
+	transform-origin: left bottom;
+	-ms-transform-origin: left bottom;
+	-moz-transform-origin: left bottom;
+	-webkit-transform-origin: left bottom;
+	-o-transform-origin: left bottom;
+}
+.content .menu{
+	position: relative;
+	top:-15px;
+	left:30px;
+
+	padding:10px;
+
+	width:500px;
+	height:240px;
+
+	background-color:rgba(53,121,123,.5);
+	background-image:url('../images/horizon_stripe.png');
+	border-radius:5px;
+	box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+	-ms-box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+	-moz-box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+	-webkit-box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+	-o-box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+
+	transform:rotateY(3deg) rotateX(-2deg);
+	-ms-transform:rotateY(3deg) rotateX(-2deg); /* IE 9 */
+	-moz-transform:rotateY(3deg) rotateX(-2deg); /* Firefox */
+	-webkit-transform:rotateY(3deg) rotateX(-2deg); /* Safari and Chrome */
+	-o-transform:rotateY(3deg) rotateX(-2deg); /* Opera */
+
+	transform-origin: right bottom;
+	-ms-transform-origin: right bottom;
+	-moz-transform-origin: right bottom;
+	-webkit-transform-origin: right bottom;
+	-o-transform-origin: right bottom;
+}
+.content .menu .links{
+	font-size:40px;
+}
+#regbox form input{
+	color:rgba(0,0,0,1);
+	background-color:rgba(255,255,255,1);
+	border-radius:3px;
+
+	border:1px solid black;
+}
+.usersMenu{
+	position: absolute;
+	right:-190px;
+	bottom:80px;
+	top:60px;
+	width:200px;
+
+	overflow: hidden;
+
+	background-color:rgba(53,121,123,.5);
+	background-image:url('../images/horizon_stripe.png');
+	border-bottom-left-radius:5px;
+	border-top-left-radius:5px;
+	box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+	-ms-box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+	-moz-box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+	-webkit-box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+	-o-box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+
+	transition:right .5s;
+	-ms-transition:right .5s;
+	-moz-transition:right .5s;
+	-webkit-transition:right .5s;
+	-o-transition:right .5s;
+}
+.usersMenu:hover{
+	right:-10px;
+}
+.usersMenu .users{
+	position:absolute;
+	top:30px;
+	right:0px;
+	left:0px;
+	bottom:0px;
+
+	overflow-y: scroll;
+}
+.usersMenu .searchBox{
+	position: absolute;
+	top:5px;
+	left:5px;
+	right:32px;
+
+	color:rgba(0,0,0,1);
+	background-color:rgba(255,255,255,1);
+	border-bottom-left-radius:5px;
+	border-top-left-radius:5px;
+
+	border:1px solid black;
+}
+.usersMenu .submit{
+	position: absolute;
+	right:5px;
+	top:7px;
+
+	width:30px;
+	height:20px;
+
+	border-bottom-right-radius:5px;
+	border-top-right-radius:5px;
+
+	border:1px solid black;
+}
+.usercake{
+	position:absolute;
+	bottom:0px;
+	right:0px;
+	font-size:20px;
+	z-index:1000;
+}
+.popups{
+	z-index:1;
+
+	position: absolute;
+	top:50px;
+	left:100px;
+	bottom:50px;
+	right:100px;
+
+	padding:10px;
+
+	display:none;
+	opacity: 1;
+	-moz-opacity: 1;
+	filter:alpha(opacity=1);
+
+	background-color:rgba(53,121,123,.8);
+	background-image:url('../images/horizon_stripe.png');
+
+	border-bottom-right-radius:5px;
+	border-bottom-left-radius:5px;
+	border-top-right-radius:5px;
+	border-top-left-radius:5px;
+
+	box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+	-ms-box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+	-moz-box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+	-webkit-box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+	-o-box-shadow: 0px 0px 10px rgba(53,121,123,.9);
+
+	text-align:center;
+}
