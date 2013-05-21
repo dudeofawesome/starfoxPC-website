@@ -1,90 +1,66 @@
-<?php
-	/*
-		UserCake Version: 1.4
-		http://usercake.com
-		
-		Developed by: Adam Davis
-	*/
-	require_once("models/config.php");
-	
-	//Prevent the user visiting the logged in page if he/she is already logged in
-	if(isUserLoggedIn()) { header("Location: account.php"); die(); }
-?>
-<?php
-	/* 
-		Activate a users account
-	*/
-$errors = array();
+<?php 
+/*
+UserCake Version: 2.0.1
+http://usercake.com
+*/
+require_once("models/config.php");
+if (!securePage($_SERVER['PHP_SELF'])){die();}
 
 //Get token param
 if(isset($_GET["token"]))
-{
-		
-		$token = $_GET["token"];
-		
-		if(!isset($token))
+{	
+	$token = $_GET["token"];	
+	if(!isset($token))
+	{
+		$errors[] = lang("FORGOTPASS_INVALID_TOKEN");
+	}
+	else if(!validateActivationToken($token)) //Check for a valid token. Must exist and active must be = 0
+	{
+		$errors[] = lang("ACCOUNT_TOKEN_NOT_FOUND");
+	}
+	else
+	{
+		//Activate the users account
+		if(!setUserActive($token))
 		{
-			$errors[] = lang("FORGOTPASS_INVALID_TOKEN");
+			$errors[] = lang("SQL_ERROR");
 		}
-		else if(!validateActivationToken($token)) //Check for a valid token. Must exist and active must be = 0
-		{
-			$errors[] = "Token does not exist / Account is already activated";
-		}
-		else
-		{
-			//Activate the users account
-			if(!setUserActive($token))
-			{
-				$errors[] = lang("SQL_ERROR");
-			}
-		}
+	}
 }
 else
 {
 	$errors[] = lang("FORGOTPASS_INVALID_TOKEN");
 }
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Account Activation</title>
-<link href="cakestyle.css" rel="stylesheet" type="text/css" />
-</head>
+
+if(count($errors) == 0) {
+	$successes[] = lang("ACCOUNT_ACTIVATION_COMPLETE");
+}
+
+require_once("models/header.php");
+
+echo "
 <body>
-<div id="wrapper">
+<div id='wrapper'>
+<div id='top'><div id='logo'></div></div>
+<div id='content'>
+<h1>UserCake</h1>
+<h2>Activate Account</h2>
 
-		<div id="content">
-    
-        <div id="left-nav">
-        <?php include("layout_inc/left-nav.php"); ?>
-            <div class="clear"></div>
-        </div>
+<div id='left-nav'>";
 
-		<div id="main">
+include("left-nav.php");
 
-		<h1>Account activation</h1>
+echo "
+</div>
+<div id='main'>";
 
-			<?php
-				if(count($errors) > 0)
-				{
-            ?>
-            <div id="errors">
-            <?php errorBlock($errors); ?>
-            </div>     
-            <?php
-           		 } else { ?> 
-        <div id="success">
-        
-           <p><?php echo lang("ACCOUNT_NOW_ACTIVE"); ?></p>
-           
-        </div>
-        <?php }?>
-	 
+echo resultBlock($errors,$successes);
 
-		</div>
-	</div>
+echo "
+</div>
+<div id='bottom'></div>
 </div>
 </body>
-</html>
+</html>";
 
+?>

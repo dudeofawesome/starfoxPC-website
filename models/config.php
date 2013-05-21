@@ -1,59 +1,57 @@
 <?php
+/*
+UserCake Version: 2.0.2
+http://usercake.com
+*/
+require_once("db-settings.php"); //Require DB connection
 
-//error_reporting(E_ALL);
-//ini_set('display_errors', '1');
-	/*
-		UserCake Version: 1.4
-		http://usercake.com
-		
-		Developed by: Adam Davis
-	*/
+//Retrieve settings
+$stmt = $mysqli->prepare("SELECT id, name, value
+	FROM ".$db_table_prefix."configuration");	
+$stmt->execute();
+$stmt->bind_result($id, $name, $value);
 
-	if(is_dir("install/"))
-	{
-		header("Location: install/");
-		die();
-	}
-	
-	require_once("settings.php");
+while ($stmt->fetch()){
+	$settings[$name] = array('id' => $id, 'name' => $name, 'value' => $value);
+}
+$stmt->close();
 
-	//Dbal Support - Thanks phpBB ; )
-	require_once("db/".$dbtype.".php");
-	
-	//Construct a db instance
-	$db = new $sql_db();
-	if(is_array($db->sql_connect(
-							$db_host, 
-							$db_user,
-							$db_pass,
-							$db_name, 
-							$db_port,
-							false, 
-							false
-	))) {
-		die("Unable to connect to the database");
-	}
-	
-	if(!isset($language)) $langauge = "en";
+//Set Settings
+$emailActivation = $settings['activation']['value'];
+$mail_templates_dir = "models/mail-templates/";
+$websiteName = $settings['website_name']['value'];
+$websiteUrl = $settings['website_url']['value'];
+$emailAddress = $settings['email']['value'];
+$resend_activation_threshold = $settings['resend_activation_threshold']['value'];
+$emailDate = date('dmy');
+$language = $settings['language']['value'];
+$template = $settings['template']['value'];
 
-	require_once("lang/".$langauge.".php");
-	require_once("class.user.php");
-	require_once("class.mail.php");
-	require_once("funcs.user.php");
-	require_once("funcs.general.php");
-	require_once("class.newuser.php");
-	require_once("class.usersonline.php");
-	require_once("funcs.profile.php");
+$master_account = -1;
 
-	session_start();
-	
-	//Global User Object Var
-	//loggedInUser can be used globally if constructed
-	if(isset($_SESSION["userCakeUser"]) && is_object($_SESSION["userCakeUser"]))
-	{
-		$loggedInUser = $_SESSION["userCakeUser"];
-	}
+$default_hooks = array("#WEBSITENAME#","#WEBSITEURL#","#DATE#");
+$default_replace = array($websiteName,$websiteUrl,$emailDate);
 
-	//View userCake users online
-	$viewUsersOnlineView = new usersOnlineView();
+if (!file_exists($language)) {
+	$language = "models/languages/en.php";
+}
+
+if(!isset($language)) $language = "models/languages/en.php";
+
+//Pages to require
+require_once($language);
+require_once("class.mail.php");
+require_once("class.user.php");
+require_once("class.newuser.php");
+require_once("funcs.php");
+
+session_start();
+
+//Global User Object Var
+//loggedInUser can be used globally if constructed
+if(isset($_SESSION["userCakeUser"]) && is_object($_SESSION["userCakeUser"]))
+{
+	$loggedInUser = $_SESSION["userCakeUser"];
+}
+
 ?>
