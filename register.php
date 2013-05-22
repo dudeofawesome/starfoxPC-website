@@ -3,7 +3,8 @@
 UserCake Version: 2.0.2
 http://usercake.com
 */
-
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 require_once("models/config.php");
 if (!securePage($_SERVER['PHP_SELF'])){die();}
 
@@ -37,7 +38,7 @@ if(!empty($_POST))
 	{
 		$errors[] = lang("ACCOUNT_DISPLAY_CHAR_LIMIT",array(5,25));
 	}
-	if(!ctype_alnum($displayname)){
+	if(!ctype_print($displayname)){
 		$errors[] = lang("ACCOUNT_DISPLAY_INVALID_CHARACTERS");
 	}
 	if(minMaxRange(8,50,$password) && minMaxRange(8,50,$confirm_pass))
